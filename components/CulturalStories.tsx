@@ -1,5 +1,6 @@
 import { getCulturalStories } from '@/lib/cosmic'
 import CulturalStoryCard from '@/components/CulturalStoryCard'
+import { CulturalStory } from '@/types'
 
 export default async function CulturalStories() {
   const stories = await getCulturalStories()
@@ -29,7 +30,7 @@ export default async function CulturalStories() {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {stories.slice(0, 6).map((story, index) => (
+      {stories.slice(0, 6).map((story: CulturalStory, index: number) => (
         <div 
           key={story.id}
           className="animate-slide-up"

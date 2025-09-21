@@ -1,5 +1,6 @@
 import { getFeaturedProducts } from '@/lib/cosmic'
 import ProductCard from '@/components/ProductCard'
+import { Product } from '@/types'
 
 export default async function FeaturedProducts() {
   const products = await getFeaturedProducts()
@@ -24,7 +25,7 @@ export default async function FeaturedProducts() {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-      {products.map((product, index) => (
+      {products.map((product: Product, index: number) => (
         <div 
           key={product.id}
           className="animate-slide-up"

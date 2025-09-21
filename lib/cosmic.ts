@@ -1,4 +1,5 @@
 import { createBucketClient } from '@cosmicjs/sdk'
+import { Artisan, Product, Workshop, CulturalStory, MarketInsight, FinancingOpportunity } from '@/types'
 
 export const cosmic = createBucketClient({
   bucketSlug: process.env.COSMIC_BUCKET_SLUG as string,
@@ -12,13 +13,13 @@ function hasStatus(error: unknown): error is { status: number } {
 }
 
 // Fetch all artisans with error handling
-export async function getArtisans() {
+export async function getArtisans(): Promise<Artisan[]> {
   try {
     const response = await cosmic.objects
       .find({ type: 'artisans' })
       .props(['id', 'title', 'slug', 'metadata'])
       .depth(1);
-    return response.objects;
+    return response.objects as Artisan[];
   } catch (error) {
     if (hasStatus(error) && error.status === 404) {
       return [];
@@ -28,7 +29,7 @@ export async function getArtisans() {
 }
 
 // Fetch featured artisans
-export async function getFeaturedArtisans() {
+export async function getFeaturedArtisans(): Promise<Artisan[]> {
   try {
     const response = await cosmic.objects
       .find({ 
@@ -37,7 +38,7 @@ export async function getFeaturedArtisans() {
       })
       .props(['id', 'title', 'slug', 'metadata'])
       .depth(1);
-    return response.objects;
+    return response.objects as Artisan[];
   } catch (error) {
     if (hasStatus(error) && error.status === 404) {
       return [];
@@ -47,7 +48,7 @@ export async function getFeaturedArtisans() {
 }
 
 // Fetch single artisan by slug
-export async function getArtisan(slug: string) {
+export async function getArtisan(slug: string): Promise<Artisan | null> {
   try {
     const response = await cosmic.objects
       .findOne({
@@ -56,7 +57,7 @@ export async function getArtisan(slug: string) {
       })
       .props(['id', 'title', 'slug', 'metadata'])
       .depth(1);
-    return response.object;
+    return response.object as Artisan;
   } catch (error) {
     if (hasStatus(error) && error.status === 404) {
       return null;
@@ -66,13 +67,13 @@ export async function getArtisan(slug: string) {
 }
 
 // Fetch all products
-export async function getProducts() {
+export async function getProducts(): Promise<Product[]> {
   try {
     const response = await cosmic.objects
       .find({ type: 'products' })
       .props(['id', 'title', 'slug', 'metadata'])
       .depth(1);
-    return response.objects;
+    return response.objects as Product[];
   } catch (error) {
     if (hasStatus(error) && error.status === 404) {
       return [];
@@ -82,7 +83,7 @@ export async function getProducts() {
 }
 
 // Fetch featured products
-export async function getFeaturedProducts() {
+export async function getFeaturedProducts(): Promise<Product[]> {
   try {
     const response = await cosmic.objects
       .find({ 
@@ -91,7 +92,7 @@ export async function getFeaturedProducts() {
       })
       .props(['id', 'title', 'slug', 'metadata'])
       .depth(1);
-    return response.objects;
+    return response.objects as Product[];
   } catch (error) {
     if (hasStatus(error) && error.status === 404) {
       return [];
@@ -101,7 +102,7 @@ export async function getFeaturedProducts() {
 }
 
 // Fetch products by artisan
-export async function getProductsByArtisan(artisanId: string) {
+export async function getProductsByArtisan(artisanId: string): Promise<Product[]> {
   try {
     const response = await cosmic.objects
       .find({ 
@@ -110,7 +111,7 @@ export async function getProductsByArtisan(artisanId: string) {
       })
       .props(['id', 'title', 'slug', 'metadata'])
       .depth(1);
-    return response.objects;
+    return response.objects as Product[];
   } catch (error) {
     if (hasStatus(error) && error.status === 404) {
       return [];
@@ -120,7 +121,7 @@ export async function getProductsByArtisan(artisanId: string) {
 }
 
 // Fetch single product by slug
-export async function getProduct(slug: string) {
+export async function getProduct(slug: string): Promise<Product | null> {
   try {
     const response = await cosmic.objects
       .findOne({
@@ -129,7 +130,7 @@ export async function getProduct(slug: string) {
       })
       .props(['id', 'title', 'slug', 'metadata'])
       .depth(1);
-    return response.object;
+    return response.object as Product;
   } catch (error) {
     if (hasStatus(error) && error.status === 404) {
       return null;
@@ -139,7 +140,7 @@ export async function getProduct(slug: string) {
 }
 
 // Fetch workshops
-export async function getWorkshops() {
+export async function getWorkshops(): Promise<Workshop[]> {
   try {
     const response = await cosmic.objects
       .find({ type: 'workshops' })
@@ -147,7 +148,7 @@ export async function getWorkshops() {
       .depth(1);
     
     // Sort by scheduled_date manually
-    return response.objects.sort((a, b) => {
+    return (response.objects as Workshop[]).sort((a: Workshop, b: Workshop) => {
       const dateA = new Date(a.metadata?.scheduled_date || '').getTime();
       const dateB = new Date(b.metadata?.scheduled_date || '').getTime();
       return dateA - dateB; // Earliest first
@@ -161,13 +162,13 @@ export async function getWorkshops() {
 }
 
 // Fetch cultural stories
-export async function getCulturalStories() {
+export async function getCulturalStories(): Promise<CulturalStory[]> {
   try {
     const response = await cosmic.objects
       .find({ type: 'cultural_stories' })
       .props(['id', 'title', 'slug', 'metadata'])
       .depth(1);
-    return response.objects;
+    return response.objects as CulturalStory[];
   } catch (error) {
     if (hasStatus(error) && error.status === 404) {
       return [];
@@ -177,7 +178,7 @@ export async function getCulturalStories() {
 }
 
 // Fetch market insights
-export async function getMarketInsights() {
+export async function getMarketInsights(): Promise<MarketInsight[]> {
   try {
     const response = await cosmic.objects
       .find({ type: 'market_insights' })
@@ -185,7 +186,7 @@ export async function getMarketInsights() {
       .depth(1);
     
     // Sort by generated_date manually (most recent first)
-    return response.objects.sort((a, b) => {
+    return (response.objects as MarketInsight[]).sort((a: MarketInsight, b: MarketInsight) => {
       const dateA = new Date(a.metadata?.generated_date || '').getTime();
       const dateB = new Date(b.metadata?.generated_date || '').getTime();
       return dateB - dateA; // Newest first
@@ -199,7 +200,7 @@ export async function getMarketInsights() {
 }
 
 // Fetch financing opportunities
-export async function getFinancingOpportunities() {
+export async function getFinancingOpportunities(): Promise<FinancingOpportunity[]> {
   try {
     const response = await cosmic.objects
       .find({ type: 'financing_opportunities' })
@@ -207,7 +208,7 @@ export async function getFinancingOpportunities() {
       .depth(1);
     
     // Sort by application_deadline manually (soonest first)
-    return response.objects.sort((a, b) => {
+    return (response.objects as FinancingOpportunity[]).sort((a: FinancingOpportunity, b: FinancingOpportunity) => {
       const dateA = new Date(a.metadata?.application_deadline || '').getTime();
       const dateB = new Date(b.metadata?.application_deadline || '').getTime();
       return dateA - dateB; // Soonest first

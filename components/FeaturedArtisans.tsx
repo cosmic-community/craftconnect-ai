@@ -1,5 +1,6 @@
 import { getFeaturedArtisans } from '@/lib/cosmic'
 import ArtisanCard from '@/components/ArtisanCard'
+import { Artisan } from '@/types'
 
 export default async function FeaturedArtisans() {
   const artisans = await getFeaturedArtisans()
@@ -24,7 +25,7 @@ export default async function FeaturedArtisans() {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {artisans.map((artisan, index) => (
+      {artisans.map((artisan: Artisan, index: number) => (
         <div 
           key={artisan.id}
           className="animate-slide-up"

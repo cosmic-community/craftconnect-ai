@@ -1,5 +1,6 @@
 import { getMarketInsights } from '@/lib/cosmic'
 import MarketInsightCard from '@/components/MarketInsightCard'
+import { MarketInsight } from '@/types'
 
 export default async function MarketInsights() {
   const insights = await getMarketInsights()
@@ -42,7 +43,7 @@ export default async function MarketInsights() {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {insights.slice(0, 6).map((insight, index) => (
+      {insights.slice(0, 6).map((insight: MarketInsight, index: number) => (
         <div 
           key={insight.id}
           className="animate-slide-up"

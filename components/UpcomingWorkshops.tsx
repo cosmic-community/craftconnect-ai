@@ -1,11 +1,12 @@
 import { getWorkshops } from '@/lib/cosmic'
 import WorkshopCard from '@/components/WorkshopCard'
+import { Workshop } from '@/types'
 
 export default async function UpcomingWorkshops() {
   const workshops = await getWorkshops()
 
   // Filter upcoming workshops (in the future)
-  const upcomingWorkshops = workshops.filter(workshop => {
+  const upcomingWorkshops = workshops.filter((workshop: Workshop) => {
     if (!workshop.metadata?.scheduled_date) return false
     return new Date(workshop.metadata.scheduled_date) > new Date()
   }).slice(0, 6) // Show only first 6
@@ -38,7 +39,7 @@ export default async function UpcomingWorkshops() {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {upcomingWorkshops.map((workshop, index) => (
+      {upcomingWorkshops.map((workshop: Workshop, index: number) => (
         <div 
           key={workshop.id}
           className="animate-slide-up"
