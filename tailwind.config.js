@@ -7,8 +7,30 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        background: 'hsl(var(--background))',
+        foreground: 'hsl(var(--foreground))',
+        card: {
+          DEFAULT: 'hsl(var(--card))',
+          foreground: 'hsl(var(--card-foreground))'
+        },
+        popover: {
+          DEFAULT: 'hsl(var(--popover))',
+          foreground: 'hsl(var(--popover-foreground))'
+        },
+        muted: {
+          DEFAULT: 'hsl(var(--muted))',
+          foreground: 'hsl(var(--muted-foreground))'
+        },
+        destructive: {
+          DEFAULT: 'hsl(var(--destructive))',
+          foreground: 'hsl(var(--destructive-foreground))'
+        },
+        border: 'hsl(var(--border))',
+        input: 'hsl(var(--input))',
+        ring: 'hsl(var(--ring))',
         primary: {
-          DEFAULT: '#8B4513',
+          DEFAULT: 'hsl(var(--primary))',
+          foreground: 'hsl(var(--primary-foreground))',
           50: '#F5F2F0',
           100: '#E8DDD6',
           200: '#D4C1B0',
@@ -21,7 +43,8 @@ module.exports = {
           900: '#331605',
         },
         secondary: {
-          DEFAULT: '#CD853F',
+          DEFAULT: 'hsl(var(--secondary))',
+          foreground: 'hsl(var(--secondary-foreground))',
           50: '#F9F5F1',
           100: '#F1E7DA',
           200: '#E6D1B6',
@@ -34,7 +57,8 @@ module.exports = {
           900: '#4C2D11',
         },
         accent: {
-          DEFAULT: '#DAA520',
+          DEFAULT: 'hsl(var(--accent))',
+          foreground: 'hsl(var(--accent-foreground))',
           50: '#FDF8E7',
           100: '#FAF0C9',
           200: '#F5E194',
@@ -58,6 +82,11 @@ module.exports = {
           800: '#372B23',
           900: '#140E10',
         }
+      },
+      borderRadius: {
+        lg: 'var(--radius)',
+        md: 'calc(var(--radius) - 2px)',
+        sm: 'calc(var(--radius) - 4px)',
       },
       fontFamily: {
         sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
